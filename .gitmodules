@@ -1,0 +1,3 @@
+[submodule "wand"]
+	path = wand
+	url = git@github.com:emcconville/wand.git

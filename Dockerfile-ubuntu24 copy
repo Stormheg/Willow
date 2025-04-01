@@ -1,0 +1,73 @@
+FROM ubuntu:24.04
+
+# Set up environment variables to avoid interactive prompts during package installation
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install system dependencies, Python, pip, and the required libraries
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    python3 \
+    python-is-python3 \
+    python3-venv \
+    python3-pip \
+    git \
+    wget \
+    unzip \
+    build-essential \
+    pkg-config \
+    cmake \
+    clang \
+    libde265-dev \
+    libheif-dev \
+    libaom-dev \
+    libdav1d-dev \
+    libfreetype6-dev \
+    libgif-dev \
+    libjpeg-dev \ 
+    libjxl-dev \
+    liblcms2-dev \
+    libltdl-dev \ 
+    libopenjp2-7-dev \
+    libpng-dev \
+    libtiff-dev \
+    libwebp-dev \
+    libxml2-dev \
+    zlib1g-dev \
+    # imagemagick \
+    # libjpeg-dev \
+    # zlib1g-dev \
+    # libtiff-dev \
+    # libfreetype6-dev \
+    # liblcms2-dev \
+    # libwebp-dev \
+    # libopenjp2-7-dev \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN git clone --depth=1  https://git.launchpad.net/ubuntu/+source/imagemagick /tmp/ImageMagick && \
+    cd /tmp/ImageMagick && \
+    git submodule update --init --recursive
+# RUN wget https://github.com/ImageMagick/ImageMagick/archive/refs/tags/7.1.1-47.zip -q -O /tmp/ImageMagick.zip
+# RUN unzip /tmp/ImageMagick.zip && \
+#     mv ImageMagick-* /tmp/ImageMagick && \
+#     rm /tmp/ImageMagick.zip
+
+# build imagemagick with clang and ninja
+WORKDIR /tmp/ImageMagick
+RUN ./configure CC=clang CXX=clang++  CFLAGS="-I/usr/include" LDFLAGS="-L/usr/lib/x86_64-linux-gnu -laom" \
+    --enable-shared \ 
+    --enable-hdri \
+    --with-modules && \
+    make -j$(nproc) && \
+    make install && \
+    ldconfig
+RUN magick -version
+
+
+WORKDIR /src
+COPY . /src/
+RUN python3 -Im pip install --break-system-packages --no-cache-dir -e .[testing]
+RUN python3 -Im pip install --break-system-packages ipdb
+# RUN python3 -Im pip install --break-system-packages -e wand
+WORKDIR /code/
+CMD [ "/bin/bash" ]

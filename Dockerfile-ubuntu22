@@ -1,0 +1,29 @@
+FROM ubuntu:22.04
+
+# Set up environment variables to avoid interactive prompts during package installation
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install system dependencies, Python, pip, and the required libraries
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    python3 \
+    python3-pip \
+    imagemagick \
+    libjpeg-dev \
+    zlib1g-dev \
+    libtiff-dev \
+    libfreetype6-dev \
+    liblcms2-dev \
+    libwebp-dev \
+    libopenjp2-7-dev \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /src
+COPY . /src/
+RUN python3 -Im pip install --no-cache-dir -e .[testing]
+RUN python3 -Im pip install ipdb
+RUN python3 -Im pip install -e wand
+
+WORKDIR /code/
+CMD [ "/bin/bash" ]
