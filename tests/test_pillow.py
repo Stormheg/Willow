@@ -492,6 +492,18 @@ class TestPillowOperations(unittest.TestCase):
         diff = ImageChops.difference(original_image, lossless_image)
         self.assertIsNone(diff.getbbox())
 
+    @unittest.skipIf(no_avif_support, "Pillow does not have AVIF support")
+    def test_save_avif_lossless_grayscale(self):
+        with open("tests/images/grayscale_transparent.png", "rb") as f:
+            original_image = PillowImage.open(PNGImageFile(f)).image
+            self.assertEqual(original_image.mode, "LA")
+
+            lossless_file = self.image.save_as_avif(io.BytesIO(), lossless=True)
+            lossless_image = PillowImage.open(lossless_file).image
+
+            diff = ImageChops.difference(original_image, lossless_image)
+            self.assertIsNone(diff.getbbox())
+
     def test_save_ico(self):
         output = io.BytesIO()
         return_value = self.image.save_as_ico(output)
