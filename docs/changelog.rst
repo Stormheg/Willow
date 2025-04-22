@@ -4,6 +4,11 @@ Changelog
 Unreleased
 ----------
 
+1.10.0 (UNRELEASED)
+-------------------
+
+- Fix `PIL.UnidentifiedImageError:` when operating on AVIF images with Pillow 11.2.1 (Storm Heg)
+
 1.9.0 (2024-10-26)
 ------------------
 
