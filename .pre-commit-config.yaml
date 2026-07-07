@@ -25,3 +25,9 @@ repos:
     hooks:
       - id: prettier
         types_or: [json, yaml, markdown, bash, editorconfig, toml]
+  - repo: https://github.com/tox-dev/pyproject-fmt
+    rev: "v2.25.1"
+    hooks:
+      - id: pyproject-fmt
+        args: ["--max-supported-python=3.14"]
+        language_version: python3.14
