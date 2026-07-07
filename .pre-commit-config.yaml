@@ -31,3 +31,8 @@ repos:
       - id: pyproject-fmt
         args: ["--max-supported-python=3.14"]
         language_version: python3.14
+  - repo: https://github.com/zizmorcore/zizmor-pre-commit
+    rev: v1.26.1
+    hooks:
+      - id: zizmor
+        args: ["--persona=pedantic"]
