@@ -149,8 +149,10 @@ class WillowRegistry:
         if with_operation:
             image_classes = set(
                 filter(
-                    lambda image_class: image_class in self._registered_operations
-                    and with_operation in self._registered_operations[image_class],
+                    lambda image_class: (
+                        image_class in self._registered_operations
+                        and with_operation in self._registered_operations[image_class]
+                    ),
                     image_classes,
                 )
             )
