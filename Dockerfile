@@ -1,7 +1,8 @@
 # This Dockerfile is used to easily run the OpenCV tests without having to install OpenCV on the host machine.
-FROM python:3.13-slim-bookworm
+FROM python:3.14-slim-trixie
 RUN apt update && apt install -y imagemagick
-RUN pip install opencv-python-headless
+# Unpin depending on outcome of https://github.com/opencv/opencv-python/issues/1244
+RUN pip install "opencv-contrib-python-headless<=5.0.0"
 
 WORKDIR /code
 COPY . ./

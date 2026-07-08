@@ -1,13 +1,19 @@
-import os
+from pathlib import Path
 
 from willow.image import Image, RGBImageBuffer
 
 
 def _cv2():
+    import cv2
+
     try:
-        import cv2
-    except ImportError:
-        from cv import cv2
+        # Check if cv2.CascadeClassifier is available (it is split into a separate package in OpenCV 5.0+)
+        _ = cv2.CascadeClassifier
+    except AttributeError:
+        raise ImportError(
+            "OpenCV is installed, but cv2.CascadeClassifier is not available. "
+            "You likely need to install opencv-contrib-python instead."
+        )
     return cv2
 
 
@@ -119,13 +125,7 @@ class OpenCVGrayscaleImage(BaseOpenCVImage):
         """
         Find the requested OpenCV cascade file.  If a relative path was provided, check local cascades directory.
         """
-        if not os.path.isabs(cascade_filename):
-            cascade_filename = os.path.join(
-                os.path.dirname(os.path.dirname(__file__)),
-                "data/cascades",
-                cascade_filename,
-            )
-        return cascade_filename
+        return str(Path(_cv2().data.haarcascades) / cascade_filename)
 
     @classmethod
     @Image.converter_from(OpenCVColorImage)
