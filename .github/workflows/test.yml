@@ -44,7 +44,7 @@ jobs:
           cache: pip
       - name: Install dependencies
         run: |
-          python -Im pip install --upgrade pip opencv-python-headless
+          python -Im pip install --upgrade pip opencv-contrib-python-headless
           python -Im pip install -e .[testing]
       - name: Test
         run: coverage run --parallel-mode -m runtests --opencv
