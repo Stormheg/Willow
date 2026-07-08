@@ -44,7 +44,8 @@ jobs:
           cache: pip
       - name: Install dependencies
         run: |
-          python -Im pip install --upgrade pip opencv-contrib-python-headless
+          # Unpin depending on outcome of https://github.com/opencv/opencv-python/issues/1244
+          python -Im pip install --upgrade pip "opencv-contrib-python-headless<=5.0.0"
           python -Im pip install -e .[testing]
       - name: Test
         run: coverage run --parallel-mode -m runtests --opencv
