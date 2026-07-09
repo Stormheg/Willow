@@ -73,34 +73,3 @@ lint.select = [
 ]
 # E501: Line too long
 lint.ignore = [ "E501" ]
-
-[tool.coverage]
-run.branch = true
-run.omit = [ "tests/*", "willow/utils/deprecation.py" ]
-run.source_pkgs = [ "willow" ]
-paths.source = [ "willow" ]
-report.exclude_lines = [
-  # Don't complain about abstract methods, they aren't run:
-  "@(abc.)?abstractmethod",
-
-  # Don't complain about missing debug-only code:
-  "def __repr__",
-  "if __name__ == .__main__.:",
-
-  # Don't complain if non-runnable code isn't run:
-  "if 0:",
-  "if self.debug",
-
-  # Nor complain about type checking
-  "if TYPE_CHECKING:",
-  # Have to re-enable the standard pragma
-  "pragma: no cover",
-
-  # Don't complain if tests don't hit defensive assertion code:
-  "raise AssertionError",
-  "raise NotImplementedError",
-]
-report.ignore_errors = true
-report.show_missing = true
-report.skip_covered = true
-report.skip_empty = true

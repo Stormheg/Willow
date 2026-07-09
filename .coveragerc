@@ -1,0 +1,26 @@
+
+[run]
+branch = true
+omit = "tests/*", "willow/utils/deprecation.py"
+source = willow/
+
+[report]
+exclude_also =
+  # Don't complain about abstract methods, they aren't run:
+  "@(abc.)?abstractmethod",
+
+  # Don't complain about missing debug-only code:
+  "def __repr__",
+  "if __name__ == .__main__.:",
+
+  # Don't complain if non-runnable code isn't run:
+  "if 0:",
+  "if self.debug",
+
+  # Don't complain if tests don't hit defensive assertion code:
+  "raise AssertionError",
+  "raise NotImplementedError",
+ignore_errors = true
+show_missing = true
+skip_covered = true
+skip_empty = true
