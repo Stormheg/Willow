@@ -1,8 +1,8 @@
 # Changelog
 
-## 1.13.0 (UNRELEASED)
+## 1.13.0
 
-- Nothing yet.
+- Sample sample sample
 
 ## 1.12.0 (2025-10-26)
 
