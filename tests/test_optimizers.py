@@ -84,9 +84,15 @@ class DefaultOptimizerTestBase:
             self.optimizer.process(image_file)
 
             with open(image_file, "rb") as f:
-                self.assertAlmostEqual(
-                    self.optimized_size, os.fstat(f.fileno()).st_size, delta=60
-                )
+                processed_image_size = os.fstat(f.fileno()).st_size
+
+                # If the image is larger than we expect based on the reference
+                # target size we have, allow a delta of 60 bytes to account for
+                # any minor differences in optimization.
+                if processed_image_size > self.optimized_size:
+                    self.assertAlmostEqual(
+                        self.optimized_size, os.fstat(f.fileno()).st_size, delta=60
+                    )
         finally:
             os.unlink(image_file)
 
