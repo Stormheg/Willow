@@ -556,6 +556,7 @@ class PillowImage(Image):
 
     @classmethod
     @Image.converter_from(JPEGImageFile)
+    @Image.converter_from(JXLImageFile)
     @Image.converter_from(PNGImageFile)
     @Image.converter_from(GIFImageFile, cost=200)
     @Image.converter_from(BMPImageFile)
