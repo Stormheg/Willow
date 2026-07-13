@@ -326,6 +326,10 @@ class PillowImage(Image):
         elif image.mode == "CMYK":
             image = image.convert("RGB")
 
+        # Unlike other formats, pillow_jxl automatically reads the ICC profile
+        # and EXIF data from the image info, so we don't need to pass it in as a
+        # kwarg.
+
         image.save(f, "JXL", **kwargs)
         if apply_optimizers:
             self.optimize(f, "jxl")
