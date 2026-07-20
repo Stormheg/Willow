@@ -3,7 +3,7 @@ Optimizing images
 
 Aside from the basic optimizations that the Pillow backend provides, Willow
 supports using dedicated libraries to optimize images. Out of the box, Willow
-comes with optimizers for `gifsicle <https://www.lcdf.org/gifsicle/>`_,
+comes with support for `gifsicle <https://www.lcdf.org/gifsicle/>`_,
 `jpegoptim <https://www.kokkonen.net/tjko/projects.html>`_, `optipng
 <https://optipng.sourceforge.net/>`_, `pngquant <https://pngquant.org/>`_,
 `cwebp <https://developers.google.com/speed/webp/docs/cwebp>`_ and `cjxl
