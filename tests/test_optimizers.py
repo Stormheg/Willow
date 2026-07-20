@@ -103,9 +103,12 @@ class GifsicleOptimizer(DefaultOptimizerTestBase, TestCase):
     optimizer = Gifsicle
 
     def test_applies_to(self):
-        self.assertTrue(Gifsicle.applies_to("gif"))
+        with self.subTest("applies to", ext="gif"):
+            self.assertTrue(Gifsicle.applies_to("gif"))
+
         for ext in ("png", "jpeg", "webp", "tiff", "bmp"):
-            self.assertFalse(Gifsicle.applies_to(ext))
+            with self.subTest("does not apply to", ext=ext):
+                self.assertFalse(Gifsicle.applies_to(ext))
 
     def test_get_command_arguments(self):
         self.assertListEqual(
@@ -119,9 +122,12 @@ class JpegoptimOptimizer(DefaultOptimizerTestBase, TestCase):
     optimizer = Jpegoptim
 
     def test_applies_to(self):
-        self.assertTrue(Jpegoptim.applies_to("jpeg"))
+        with self.subTest("applies to", ext="jpeg"):
+            self.assertTrue(Jpegoptim.applies_to("jpeg"))
+
         for ext in ("png", "gif", "webp", "tiff", "bmp"):
-            self.assertFalse(Jpegoptim.applies_to(ext))
+            with self.subTest("does not apply to", ext=ext):
+                self.assertFalse(Jpegoptim.applies_to(ext))
 
     def test_get_command_arguments(self):
         self.assertListEqual(
@@ -160,9 +166,12 @@ class CwebpOptimizer(DefaultOptimizerTestBase, TestCase):
     optimizer = Cwebp
 
     def test_applies_to(self):
-        self.assertTrue(Cwebp.applies_to("webp"))
+        with self.subTest("applies to", ext="webp"):
+            self.assertTrue(Cwebp.applies_to("webp"))
+
         for ext in ("png", "jpeg", "gif", "tiff", "bmp"):
-            self.assertFalse(Cwebp.applies_to(ext))
+            with self.subTest("does not apply to", ext=ext):
+                self.assertFalse(Cwebp.applies_to(ext))
 
     def test_get_command_arguments(self):
         self.assertListEqual(
@@ -194,9 +203,12 @@ class CjxlOptimizer(DefaultOptimizerTestBase, TestCase):
     optimizer = Cjxl
 
     def test_applies_to(self):
-        self.assertTrue(Cjxl.applies_to("jxl"))
+        with self.subTest("applies to", ext="jxl"):
+            self.assertTrue(Cjxl.applies_to("jxl"))
+
         for ext in ("png", "jpeg", "gif", "tiff", "bmp"):
-            self.assertFalse(Cjxl.applies_to(ext))
+            with self.subTest("does not apply to", ext=ext):
+                self.assertFalse(Cjxl.applies_to(ext))
 
     def test_get_command_arguments(self):
         self.assertListEqual(
