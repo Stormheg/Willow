@@ -91,7 +91,15 @@ class DefaultOptimizerTestBase:
                 # any minor differences in optimization.
                 if processed_image_size > self.optimized_size:
                     self.assertAlmostEqual(
-                        self.optimized_size, os.fstat(f.fileno()).st_size, delta=60
+                        self.optimized_size, processed_image_size, delta=60
+                    )
+                # Smaller images can happen. Optimizers can get more efficient
+                # over time. But if the image is *much* smaller than expected,
+                # it could indicate a problem worth investigating.
+                else:
+                    # We allow a 10% difference
+                    self.assertGreaterEqual(
+                        processed_image_size, self.optimized_size * 0.9
                     )
         finally:
             os.unlink(image_file)
